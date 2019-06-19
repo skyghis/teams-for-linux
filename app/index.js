@@ -74,9 +74,9 @@ if (!gotTheLock) {
 
 		window.loadURL(config.url);
 
-		if (config.webDebug) {
+		// if (config.webDebug) {
 			window.openDevTools();
-		}
+		// }
 	});
 
 	app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {

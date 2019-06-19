@@ -1,8 +1,8 @@
-const { remote, screen } = require('electron');
+const { remote } = require('electron');
 const { BrowserWindow } = remote;
 
 function selectSource(callback) {
-	var display  = screen.getPrimaryDisplay();
+	var display  = remote.screen.getPrimaryDisplay();
 	const selectorWindow = new BrowserWindow({
 		title: 'Share Your Screen',
 		parent: remote.getCurrentWindow(),
