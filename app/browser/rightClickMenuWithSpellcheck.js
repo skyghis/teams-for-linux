@@ -48,8 +48,8 @@ if (!process.env.LANG) {
 setupLinux(locale);
 
 var simpleChecker = window.spellChecker = {
-	spellCheck: function (text, callback) {
-		callback(this.isMisspelled(text));
+	spellCheck: function (text) {
+		return !this.isMisspelled(text);
 	},
 	isMisspelled: function (text) {
 		var misspelled = spellchecker.isMisspelled(text);
