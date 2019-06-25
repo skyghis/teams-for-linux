@@ -63,7 +63,7 @@
         "rpm",
         "deb",
         "tar.gz",
-        "snap",
+        "snap",  
         "AppImage",
         "pacman"
       ],
