@@ -2,6 +2,7 @@ const { remote } = require('electron');
 const { BrowserWindow } = remote;
 
 function selectSource(callback) {
+	alert('selectSource');
 	var display  = remote.screen.getPrimaryDisplay();
 	const selectorWindow = new BrowserWindow({
 		title: 'Share Your Screen',

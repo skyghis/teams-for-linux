@@ -34,51 +34,57 @@
   </style>
   <script>
     console.log('getting sources');
-    const { remote, desktopCapturer, screen } = require('electron');
+    const { remote, desktopCapturer } = require('electron');
     
     var self = remote.getCurrentWindow();
     self.once('pickDesktopMedia', (types) => {
       console.log(types);
-      desktopCapturer.getSources({ types: types, thumbnailSize: { width: 800, height: 600} }, (error, sources) => {
-        if (error) return;
-
+      desktopCapturer.getSources({ types: types, thumbnailSize: { width: 800, height: 600} }).then(async sources => {
         var grid = $('#desktopCapturerGallery');
-        $.each(sources, (i, source) => {
-          console.log(source);
-          let title = source.name.slice(0, 40);
-          var ele = $('<div class="imageHolder"><a><img class="imageAttr" alt="'+ title + '"/><div class="caption"><br>' + title + '</br></div></a></div>');
-          ele.find("img").prop("src", source.thumbnail.toDataURL());
-          ele.find('a').click( () => {
-            self.emit('choseDesktopMedia', source.id);
-            grid.hide();
-            self.setSize(340, 260);
-            var display  = screen.getPrimaryDisplay();
-            self.setPosition(display.bounds.width - 340, display.bounds.height - 260);
-            navigator.mediaDevices.getUserMedia({
-              audio: false,
-              video: {
-                mandatory: {
-                  chromeMediaSource: 'desktop',
-                  chromeMediaSourceId: source.id,
-                  minWidth: 1280,
-                  maxWidth: 1280,
-                  minHeight: 1080,
-                  maxHeight: 1080
-                }
-              }
-            }).then((stream) => {
-              var video = document.querySelector('video');
-              video.srcObject = stream;
-              video.style.display = 'block';
-            })
-            .catch((e) => alert(e));
-            return;
-          });
-          grid.append(ele);
-        });
+        for (const source of sources) {
+          if (source.name === 'Electron') {
+            console.log(source);
+            let title = source.name.slice(0, 40);
+            var ele = $('<div class="imageHolder"><a><img class="imageAttr" alt="'+ title + '"/><div class="caption"><br>' + title + '</br></div></a></div>');
+            ele.find("img").prop("src", source.thumbnail.toDataURL());
+            ele.find('a').click( chooseDesktopMedia);
+            grid.append(ele);
+          }
+        };
       });
-
     });
+
+    function chooseDesktopMedia () {
+      self.emit('choseDesktopMedia', source.id);
+      grid.hide();
+      self.setSize(340, 260);
+      var display  = remote.screen.getPrimaryDisplay();
+      self.setPosition(display.bounds.width - 340, display.bounds.height - 260);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: {
+            mandatory: {
+              chromeMediaSource: 'desktop',
+              chromeMediaSourceId: source.id,
+              minWidth: 1280,
+              maxWidth: 1280,
+              minHeight: 720,
+              maxHeight: 720
+            }
+          }
+        })
+        handleStream(stream) 
+      } catch (e) {
+        alert(e);
+      }
+    }
+
+    function handleStream (stream) {
+      var video = document.querySelector('video');
+      video.srcObject = stream;
+      video.style.display = 'block';
+    }
 
     setTimeout(function () {
       remote.getCurrentWindow().emit('chooseDesktopMedia', 'poopfarts');
