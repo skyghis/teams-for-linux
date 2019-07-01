@@ -9,9 +9,9 @@
 	if (config.onlineOfflineReload) {
 		require('./onlineOfflineListener')();
 	}
-	if (config.rightClickWithSpellcheck) {
-		require('./rightClickMenuWithSpellcheck');
-	}
+	// if (config.rightClickWithSpellcheck) {
+	// 	require('./rightClickMenuWithSpellcheck');
+	// }
 	require('./zoom')();
 
 	require('./desktopShare/chromeApi');
@@ -23,7 +23,7 @@
 	if (config.enableDesktopNotificationsHack) {
 		pageTitleNotifications(ipcRenderer);
 	}
-	
+
 	document.addEventListener(
 		'DOMContentLoaded',
 		() => {

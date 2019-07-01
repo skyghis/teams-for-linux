@@ -25,7 +25,7 @@ function selectSource(callback) {
 	});
 
 	selectorWindow.on('close', () => callback());
-	selectorWindow.on('choseDesktopMedia', callback);
+	selectorWindow.on('chooseDesktopMedia', callback);
 	selectorWindow.loadURL(url);
 }
 

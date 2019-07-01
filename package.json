@@ -33,12 +33,12 @@
   "dependencies": {
     "electron-editor-context-menu": "^1.1.1",
     "electron-native-notification": "^1.2.1",
+    "electron": "^4.2.5",
     "electron-window-state": "^5.0.3",
     "spellchecker": "^3.6.0",
     "yargs": "^13.3.0"
   },
   "devDependencies": {
-    "electron": "^5.0.5",
     "electron-builder": "^20.43.0",
     "eslint": "^5.16.0",
     "yarn": "^1.16.0"
@@ -63,7 +63,7 @@
         "rpm",
         "deb",
         "tar.gz",
-        "snap",  
+        "snap",
         "AppImage",
         "pacman"
       ],
