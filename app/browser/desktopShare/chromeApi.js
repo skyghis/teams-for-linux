@@ -1,17 +1,15 @@
 
 const { selectSource } = require('./captureSelector');
 
-
-
 window.chrome = {
-	'runtime': {
-		'sendMessage': function (extensionId, messageName, callback) {
-			// Parse the optional args.
-			alert(extensionId);
+	runtime: {
+		connect: (event) => console.log('connect', event),
+		sendMessage: (extensionId, messageName, callback) => {
+			console.log(extensionId);
 			alert(messageName);
-			alert(callback);
+			console.log(callback);
 			if (messageName == 'version') {
-				alert(messageName);
+				console.log(messageName);
 				callback({ version: '1.1.0' });
 			} else if (messageName == 'get-sourceId') {
 				selectSource(sourceId => {
