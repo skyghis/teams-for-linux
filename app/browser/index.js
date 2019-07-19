@@ -9,12 +9,7 @@
 	if (config.onlineOfflineReload) {
 		require('./onlineOfflineListener')();
 	}
-	// if (config.rightClickWithSpellcheck) {
-	// 	require('./rightClickMenuWithSpellcheck');
-	// }
 	require('./zoom')();
-
-	require('./desktopShare/chromeApi');
 	
 	const iconPath = path.join(__dirname, '../assets/icons/icon-96x96.png');
 
@@ -29,19 +24,24 @@
 		() => {
 
 			setTimeout(() => {
-				let injector = angular.element(document).injector();
+				if (angular) {
+					let injector = angular.element(document).injector();
 
-				if(injector) {
-					enableChromeVideoAudioMeetings(injector);
-					disablePromoteStuff(injector);
-					
-					injector.get('settingsService').settingsService.refreshSettings();
-					
+					if(injector) {
+						enableChromeVideoAudioMeetings(injector);
+						disablePromoteStuff(injector);
+						
+						injector.get('settingsService').settingsService.refreshSettings();
+						
+					}
+					 document.getElementById('screens-sources').innerHTML = "<div id='desktopCapturerGallery'><a href='testing'>testing</a>";	
 				}
 				// Future tests can be done in here...
 				// angular.element(document).injector().get('settingsService').appConfig.replyBoxFocusAfterNewMessage = true;
 				//last I look is enableIncomingVideoUnsupportedUfd groing from down to up.
 			}, 4000);
+			// require('./desktopShare/chromeApi');
+
 		},
 	);
 
@@ -50,6 +50,7 @@
 		injector.get('callingSupportService').isChromeMeetingSingleVideoEnabled = true;
 		injector.get('callingSupportService').isChromeVideoOneOnOneEnabled = true;
 		injector.get('callingSupportService').isChromeVideoMultipartyEnabled = true;
+		injector.get('callingSupportService').isWeb = false;
 		injector.get('settingsService').appConfig.enableCallingChromeOneOnOne = true;
 		injector.get('settingsService').appConfig.callingEnableChromeMeetingSingleVideo = true;
 		injector.get('settingsService').appConfig.callingEnableChromeMultipartyVideo = true;
