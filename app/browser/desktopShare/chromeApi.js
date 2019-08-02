@@ -26,5 +26,10 @@ window.chrome = {
 			}
 		}
 	}
+
 };
 
+window.chrome.onMessage.addListener(
+    function(message, callback) {
+	  console.log(message);
+   });

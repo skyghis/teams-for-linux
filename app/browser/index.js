@@ -19,10 +19,9 @@
 		pageTitleNotifications(ipcRenderer);
 	}
 
-	document.addEventListener('DOMContentLoaded',() => {modifyAngularSettingsWithTimeot();
-			// require('./desktopShare/chromeApi');
-		},
-	);
+	document.addEventListener('DOMContentLoaded',() => {
+		modifyAngularSettingsWithTimeot();
+	});
 
 	function modifyAngularSettingsWithTimeot() {
 		setTimeout(() => {
@@ -34,8 +33,8 @@
 					disablePromoteStuff(injector);
 
 					injector.get('settingsService').settingsService.refreshSettings();
+					require('./desktopShare/chromeApi');
 				}
-				 document.getElementById('screens-sources').innerHTML = "<div id='desktopCapturerGallery'><a href='testing'>testing</a>";
 			} catch (error) {
 				if (error instanceof ReferenceError) {
 					modifyAngularSettingsWithTimeot();
@@ -52,7 +51,6 @@
 		injector.get('callingSupportService').isChromeMeetingSingleVideoEnabled = true;
 		injector.get('callingSupportService').isChromeVideoOneOnOneEnabled = true;
 		injector.get('callingSupportService').isChromeVideoMultipartyEnabled = true;
-		injector.get('callingSupportService').isDesktopApp = true;
 		injector.get('settingsService').appConfig.enableCallingChromeOneOnOne = true;
 		injector.get('settingsService').appConfig.callingEnableChromeMeetingSingleVideo = true;
 		injector.get('settingsService').appConfig.callingEnableChromeMultipartyVideo = true;
