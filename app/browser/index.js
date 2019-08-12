@@ -88,5 +88,10 @@
 		injector.get('settingsService').appConfig.hideGetAppButton = true;
 		injector.get('settingsService').appConfig.enableMobileDownloadMailDialog = false;
 	}
+
+	// Fix Blank screen bug introduced by MS in Aug. 2019
+	// [#171](https://github.com/IsmaelMartinez/teams-for-linux/issues/171#issuecomment-520175256)
+	Object.defineProperty(navigator.serviceWorker, 'register', { value: () => Promise.reject() });
+
 }());
 
